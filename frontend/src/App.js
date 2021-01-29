@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 import Home from './containers/Home';
+import Shop from './containers/Shop';
 import Google from './containers/Google';
 import Facebook from './containers/Facebook';
 import Dashboard from './containers/Dashboard';
@@ -19,6 +20,7 @@ const App = () => (
         <Router>
             <Layout>
                 <Route exact path='/' component={Home} />
+                <Route exact path='/shop' component={Shop} />
                 <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />

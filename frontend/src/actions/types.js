@@ -23,6 +23,10 @@ export const SET_AUTH_LOADING = 'SET_AUTH_LOADING';
 export const REMOVE_AUTH_LOADING = 'REMOVE_AUTH_LOADING';
 export const LOGOUT = 'LOGOUT';
 
+// Categories
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
+export const GET_CATEGORIES_FAIL = 'GET_CATEGORIES_FAIL';
+
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
