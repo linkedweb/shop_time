@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 import Home from './containers/Home';
 import Shop from './containers/Shop';
+import Search from './containers/Search';
+import ProductDetail from './containers/ProductDetail';
 import Google from './containers/Google';
 import Facebook from './containers/Facebook';
 import Dashboard from './containers/Dashboard';
@@ -21,6 +23,8 @@ const App = () => (
             <Layout>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/shop' component={Shop} />
+                <Route exact path='/search' component={Search} />
+                <Route exact path='/product/:id' component={ProductDetail} />
                 <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />

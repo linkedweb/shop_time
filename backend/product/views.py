@@ -260,20 +260,20 @@ class ListBySearchView(APIView):
 
         # Filter by the price range
         # If data passed for price range isn't equal to one of these cases, then don't filter by price range
-        if price_range == '1 - 9':
+        if price_range == '1 - 19':
             product_results = product_results.filter(price__gte=1)
-            product_results = product_results.filter(price__lt=10)
-        elif price_range == '10 - 19':
-            product_results = product_results.filter(price__gte=10)
             product_results = product_results.filter(price__lt=20)
-        elif price_range == '20 - 29':
+        elif price_range == '20 - 39':
             product_results = product_results.filter(price__gte=20)
-            product_results = product_results.filter(price__lt=30)
-        elif price_range == '30 - 39':
-            product_results = product_results.filter(price__gte=30)
             product_results = product_results.filter(price__lt=40)
-        elif price_range == 'More than 40':
+        elif price_range == '40 - 59':
             product_results = product_results.filter(price__gte=40)
+            product_results = product_results.filter(price__lt=60)
+        elif price_range == '60 - 79':
+            product_results = product_results.filter(price__gte=60)
+            product_results = product_results.filter(price__lt=80)
+        elif price_range == 'More than 80':
+            product_results = product_results.filter(price__gte=80)
 
         # Filter by the order and sort_by
         if order == 'desc':
