@@ -42,7 +42,7 @@ export const check_authenticated = () => async dispatch => {
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config);
 
-            if (res.data.code !== 'token_not_valid') {
+            if (res.status === 200) {
                 dispatch({
                     type: AUTHENTICATED_SUCCESS
                 });
@@ -85,7 +85,7 @@ export const signup = (first_name, last_name, email, password, re_password) => a
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
 
-        if (res.data.email) {
+        if (res.status === 201) {
             dispatch({
                 type: SIGNUP_SUCCESS,
                 payload: res.data
@@ -124,7 +124,7 @@ export const load_user = () => async dispatch => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
 
-            if (res.data.email) {
+            if (res.status === 200) {
                 dispatch({
                     type: USER_LOADED_SUCCESS,
                     payload: res.data
@@ -165,7 +165,7 @@ export const login = (email, password) => async dispatch => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
 
-        if (res.data.access) {
+        if (res.status === 200) {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
@@ -217,7 +217,7 @@ export const google_authenticate = (state, code) => async dispatch => {
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?${formBody}`, config);
 
-            if (res.data.access) {
+            if (res.status === 201) {
                 dispatch({
                     type: GOOGLE_AUTH_SUCCESS,
                     payload: res.data
@@ -270,7 +270,7 @@ export const facebook_authenticate = (state, code) => async dispatch => {
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?${formBody}`, config);
 
-            if (res.data.access) {
+            if (res.status === 201) {
                 dispatch({
                     type: FACEBOOK_AUTH_SUCCESS,
                     payload: res.data
@@ -320,16 +320,16 @@ export const activate = (uid, token) => async dispatch => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
 
-        if (res.data.uid || res.data.token) {
-            dispatch({
-                type: ACTIVATION_FAIL
-            });
-            dispatch(setAlert('Error activating account', 'danger'));
-        } else {
+        if (res.status === 204) {
             dispatch({
                 type: ACTIVATION_SUCCESS
             });
             dispatch(setAlert('Successfully activated your Account', 'success'));
+        } else {
+            dispatch({
+                type: ACTIVATION_FAIL
+            });
+            dispatch(setAlert('Error activating account', 'danger'));
         }
 
         dispatch({
@@ -362,7 +362,7 @@ export const refresh = () => async dispatch => {
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/refresh/`, body, config);
 
-            if (res.data.access) {
+            if (res.status === 200) {
                 dispatch({
                     type: REFRESH_SUCCESS,
                     payload: res.data
@@ -398,15 +398,25 @@ export const reset_password = (email) => async dispatch => {
     const body = JSON.stringify({ email });
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
 
-        dispatch({
-            type: RESET_PASSWORD_SUCCESS
-        });
-        dispatch({
-            type: REMOVE_AUTH_LOADING
-        });
-        dispatch(setAlert('Password reset email sent', 'success'));
+        if (res.status === 204) {
+            dispatch({
+                type: RESET_PASSWORD_SUCCESS
+            });
+            dispatch({
+                type: REMOVE_AUTH_LOADING
+            });
+            dispatch(setAlert('Password reset email sent', 'success'));
+        } else {
+            dispatch({
+                type: RESET_PASSWORD_FAIL
+            });
+            dispatch({
+                type: REMOVE_AUTH_LOADING
+            });
+            dispatch(setAlert('Error sending password reset email', 'danger'));
+        }
     } catch (err) {
         dispatch({
             type: RESET_PASSWORD_FAIL
@@ -446,15 +456,25 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
         dispatch(setAlert('Passwords do not match', 'danger'));
     } else {
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config);
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config);
 
-            dispatch({
-                type: RESET_PASSWORD_CONFIRM_SUCCESS
-            });
-            dispatch({
-                type: REMOVE_AUTH_LOADING
-            });
-            dispatch(setAlert('Password has been reset successfully', 'success'));
+            if (res.status === 204) {
+                dispatch({
+                    type: RESET_PASSWORD_CONFIRM_SUCCESS
+                });
+                dispatch({
+                    type: REMOVE_AUTH_LOADING
+                });
+                dispatch(setAlert('Password has been reset successfully', 'success'));
+            } else {
+                dispatch({
+                    type: RESET_PASSWORD_CONFIRM_FAIL
+                });
+                dispatch({
+                    type: REMOVE_AUTH_LOADING
+                });
+                dispatch(setAlert('Error resetting your password', 'danger'));
+            }
         } catch (err) {
             dispatch({
                 type: RESET_PASSWORD_CONFIRM_FAIL
