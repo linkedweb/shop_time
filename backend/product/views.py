@@ -48,7 +48,9 @@ class ListProductsView(APIView):
         try:
             limit = int(limit)
         except:
-            return Response({'error': 'Limit must be an integer'})
+            return Response(
+                {'error': 'Limit must be an integer'},
+                status=status.HTTP_404_NOT_FOUND)
 
         if limit <= 0:
             limit = 6
