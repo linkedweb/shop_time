@@ -12,7 +12,7 @@ class GetItemsView(APIView):
 
         try:
             cart = Cart.objects.get(user=user)
-            cart_items = CartItem.objects.filter(cart=cart)
+            cart_items = CartItem.objects.order_by('product').filter(cart=cart)
 
             result = []
 
@@ -78,7 +78,8 @@ class AddItemView(APIView):
                         total_items=total_items
                     )
 
-                cart_items = CartItem.objects.filter(cart=cart)
+                cart_items = CartItem.objects.order_by(
+                    'product').filter(cart=cart)
 
                 result = []
 
@@ -193,7 +194,8 @@ class UpdateItemView(APIView):
                     product=product, cart=cart
                 ).update(count=count)
 
-                cart_items = CartItem.objects.filter(cart=cart)
+                cart_items = CartItem.objects.order_by(
+                    'product').filter(cart=cart)
 
                 result = []
 
@@ -253,7 +255,7 @@ class RemoveItemView(APIView):
                 total_items = int(cart.total_items) - 1
                 Cart.objects.filter(user=user).update(total_items=total_items)
 
-            cart_items = CartItem.objects.filter(cart=cart)
+            cart_items = CartItem.objects.order_by('product').filter(cart=cart)
 
             result = []
 
@@ -310,9 +312,10 @@ class SynchCartView(APIView):
 
         try:
             cart_items = data['cart_items']
-            cart = Cart.objects.get(user=user)
 
             for cart_item in cart_items:
+                cart = Cart.objects.get(user=user)
+
                 try:
                     product_id = int(cart_item['product_id'])
                 except:
