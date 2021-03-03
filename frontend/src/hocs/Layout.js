@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { check_authenticated, load_user, refresh } from '../actions/auth';
+import { 
+    check_authenticated, 
+    load_user, 
+    refresh 
+} from '../actions/auth';
+import {
+    get_items,
+    get_total,
+    get_item_total
+} from '../actions/cart';
 import Navbar from '../components/Navbar';
 
 const Layout = ({ 
     check_authenticated,
     load_user,
     refresh,
+    get_items,
+    get_total,
+    get_item_total,
     children
 }) => {
     const [searchRedirect, setSearchRedirect] = useState(false);
@@ -16,13 +28,15 @@ const Layout = ({
         refresh();
         check_authenticated();
         load_user();
+        get_items();
+        get_total();
+        get_item_total();
     }, []);
 
     if (searchRedirect) {
         return (
             <div>
                 <Navbar
-                    searchRedirect={searchRedirect}
                     setSearchRedirect={setSearchRedirect}
                 />
                 <Redirect to='/search' />
@@ -33,7 +47,6 @@ const Layout = ({
     return (
         <div>
             <Navbar
-                searchRedirect={searchRedirect}
                 setSearchRedirect={setSearchRedirect}
             />
             {children}
@@ -44,5 +57,8 @@ const Layout = ({
 export default connect(null, {
     check_authenticated,
     load_user,
-    refresh
+    refresh,
+    get_items,
+    get_total,
+    get_item_total
 })(Layout);

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 import Home from './containers/Home';
+import Cart from './containers/Cart';
+import GoToCart from './containers/GoToCart';
 import Shop from './containers/Shop';
 import Search from './containers/Search';
 import ProductDetail from './containers/ProductDetail';
@@ -23,6 +25,8 @@ const App = () => (
             <Layout>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/shop' component={Shop} />
+                <Route exact path='/cart' component={Cart} />
+                <Route exact path='/cart-or-continue-shopping' component={GoToCart} />
                 <Route exact path='/search' component={Search} />
                 <Route exact path='/product/:id' component={ProductDetail} />
                 <Route exact path='/dashboard' component={Dashboard} />
