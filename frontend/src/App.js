@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 import Home from './containers/Home';
 import Cart from './containers/Cart';
+import Checkout from './containers/Checkout';
 import GoToCart from './containers/GoToCart';
 import Shop from './containers/Shop';
 import Search from './containers/Search';
@@ -17,6 +18,8 @@ import Activate from './containers/Activate';
 import ResetPassword from './containers/ResetPassword';
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm';
 
+import PrivateRoute from './hocs/PrivateRoute';
+
 import store from './store';
 
 const App = () => (
@@ -26,6 +29,7 @@ const App = () => (
                 <Route exact path='/' component={Home} />
                 <Route exact path='/shop' component={Shop} />
                 <Route exact path='/cart' component={Cart} />
+                <PrivateRoute exact path='/checkout' component={Checkout} />
                 <Route exact path='/cart-or-continue-shopping' component={GoToCart} />
                 <Route exact path='/search' component={Search} />
                 <Route exact path='/product/:id' component={ProductDetail} />
