@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'product',
     'cart',
     'orders',
+    'payment',
     'shipping',
 ]
 
@@ -105,7 +106,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'johndoe1357933@gmail.com'
-EMAIL_HOST_PASSWORD = 'omjdxxwxtvgfjoig'
+EMAIL_HOST_PASSWORD = 'rudzvhwoozbukmmh'
 EMAIL_USE_TLS = True
 
 
@@ -200,6 +201,11 @@ DJOSER = {
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     }
 }
+
+BT_ENVIRONMENT = 'sandbox'
+BT_MERCHANT_ID = '9k7qfkf4snz4kxqj'
+BT_PUBLIC_KEY = 'qjx5n9d2cpns523z'
+BT_PRIVATE_KEY = '069a1688bf476c4eef953244ca2bd19b'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '913181233276-6dbe4tj45dj94nfrerv1d92djb7moto2.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '53Izi8qbTb6-2y2ChEwCOkey'
