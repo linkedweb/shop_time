@@ -2,6 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+    check_coupon
+} from '../actions/coupons';
+import {
     refresh
 } from '../actions/auth';
 import {
@@ -33,10 +36,13 @@ const Checkout = ({
     made_payment,
     loading,
     original_price,
+    total_after_coupon,
     total_amount,
     total_compare_amount,
     estimated_tax,
-    shipping_cost
+    shipping_cost,
+    check_coupon,
+    coupon
 }) => {
     const [formData, setFormData] = useState({
         full_name: '',
@@ -47,6 +53,7 @@ const Checkout = ({
         postal_zip_code: '',
         country_region: 'Canada',
         telephone_number: '',
+        coupon_name: '',
         shipping_id: 0,
     });
 
@@ -63,28 +70,53 @@ const Checkout = ({
         postal_zip_code,
         country_region,
         telephone_number,
+        coupon_name,
         shipping_id,
     } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const apply_coupon = async e => {
+        e.preventDefault();
+
+        check_coupon(coupon_name);
+    };
 
     const buy = async e => {
         e.preventDefault();
 
         let nonce = await data.instance.requestPaymentMethod();
 
-        process_payment(
-            nonce,
-            shipping_id,
-            full_name,
-            address_line_1,
-            address_line_2,
-            city,
-            state_province_region,
-            postal_zip_code,
-            country_region,
-            telephone_number
-        );
+        if (coupon && coupon !== null && coupon !== undefined) {
+            process_payment(
+                nonce,
+                shipping_id,
+                coupon.name,
+                full_name,
+                address_line_1,
+                address_line_2,
+                city,
+                state_province_region,
+                postal_zip_code,
+                country_region,
+                telephone_number
+            );
+        } else {
+            process_payment(
+                nonce,
+                shipping_id,
+                '',
+                full_name,
+                address_line_1,
+                address_line_2,
+                city,
+                state_province_region,
+                postal_zip_code,
+                country_region,
+                telephone_number
+            );
+        }
+        
     };
 
     useEffect(() => {
@@ -99,8 +131,11 @@ const Checkout = ({
     }, [user]);
 
     useEffect(() => {
-        get_payment_total(shipping_id);
-    }, [shipping_id]);
+        if (coupon && coupon !== null && coupon !== undefined)
+            get_payment_total(shipping_id, coupon.name);
+        else
+            get_payment_total(shipping_id, '');
+    }, [shipping_id, coupon]);
 
     const showItems = () => {
         return (
@@ -178,19 +213,41 @@ const Checkout = ({
             </Fragment>
         );
 
-        // COUPONS
-
-        result.push(
-            <Fragment>
-                <span
-                    style={{
-                        color: '#b12704'
-                    }}
-                >
-                    ${original_price}
-                </span>
-            </Fragment>
-        );
+       // If a coupon was applied
+       if (coupon && coupon !== null && coupon !== undefined) {
+            result.push(
+                <Fragment>
+                    <span
+                        style={{
+                            color: '#b12704',
+                            textDecoration: 'line-through'
+                        }}
+                    >
+                        ${original_price}
+                    </span>
+                    <div>
+                        <span className='text-muted mr-2'>
+                            Discounted Items:
+                        </span>
+                        <span style={{ color: '#b12704' }}>
+                            ${total_after_coupon}
+                        </span>
+                    </div>
+                </Fragment>
+            );
+        } else {
+            result.push(
+                <Fragment>
+                    <span
+                        style={{
+                            color: '#b12704'
+                        }}
+                    >
+                        ${original_price}
+                    </span>
+                </Fragment>
+            );
+        }
 
         // Display Shipping & Handling
         if (shipping && shipping_id !== 0) {
@@ -313,6 +370,44 @@ const Checkout = ({
             <div className='row'>
                 <div className='col-7'>
                     {showItems()}
+                    <h4 className='text-muted'>
+                        Gift cards &amp; promotional codes
+                    </h4>
+                    <form 
+                        className='mt-3'
+                        style={{ width: '60%' }}
+                        onSubmit={e => apply_coupon(e)}
+                    >
+                        <div className='form-group'>
+                            <input
+                                className='form-control'
+                                name='coupon_name'
+                                type='text'
+                                placeholder='Enter Code'
+                                onChange={e => onChange(e)}
+                                value={coupon_name}
+                            />
+                        </div>
+                        {
+                            coupon && 
+                            coupon !== null &&
+                            coupon !== undefined ? (
+                                <div
+                                    className='text-muted mt-2 mb-3'
+                                >
+                                    {coupon.name} is applied.
+                                </div>
+                            ) : (
+                                <Fragment></Fragment>
+                            )
+                        }
+                        <button
+                            className='btn btn-primary'
+                            type='submit'
+                        >
+                            Apply
+                        </button>
+                    </form>
                 </div>
                 <div className='col-5'>
                     <h2 className='mb-3'>Order Summary</h2>
@@ -345,11 +440,13 @@ const mapStateToProps = state => ({
     user: state.auth.user,
     items: state.cart.items,
     total_items: state.cart.total_items,
+    coupon: state.coupons.coupon,
     shipping: state.shipping.shipping,
     clientToken: state.payment.clientToken,
     made_payment: state.payment.made_payment,
     loading: state.payment.loading,
     original_price: state.payment.original_price,
+    total_after_coupon: state.payment.total_after_coupon,
     total_amount: state.payment.total_amount,
     total_compare_amount: state.payment.total_compare_amount,
     estimated_tax: state.payment.estimated_tax,
@@ -357,6 +454,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
+    check_coupon,
     refresh,
     get_shipping_options,
     get_payment_total,

@@ -13,7 +13,7 @@ import {
     REMOVE_PAYMENT_LOADING
 } from './types';
 
-export const get_payment_total = (shipping_id) => async dispatch => {
+export const get_payment_total = (shipping_id, coupon_name) => async dispatch => {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -22,7 +22,7 @@ export const get_payment_total = (shipping_id) => async dispatch => {
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/get-payment-total?shipping_id=${shipping_id}`, config);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/get-payment-total?shipping_id=${shipping_id}&coupon_name=${coupon_name}`, config);
 
         if (res.status === 200 && !res.data.error) {
             dispatch({
@@ -72,6 +72,7 @@ export const get_client_token = () => async dispatch => {
 export const process_payment = (
     nonce,
     shipping_id,
+    coupon_name,
     full_name,
     address_line_1,
     address_line_2,
@@ -92,6 +93,7 @@ export const process_payment = (
     const body = JSON.stringify({
         nonce,
         shipping_id,
+        coupon_name,
         full_name,
         address_line_1,
         address_line_2,

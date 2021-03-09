@@ -10,6 +10,7 @@ urlpatterns = [
     path('auth/', include('djoser.social.urls')),
     path('api/cart/', include('cart.urls')),
     path('api/category/', include('category.urls')),
+    path('api/coupon/', include('coupons.urls')),
     path('api/products/', include('product.urls')),
     path('api/shipping/', include('shipping.urls')),
     path('api/order/', include('orders.urls')),
