@@ -28,9 +28,7 @@ class GetItemsView(APIView):
                     item['product'] = product.data
 
                     result.append(item)
-            if len(result) != 0:
-                return Response({'cart': result}, status=status.HTTP_200_OK)
-            return Response({'cart': result}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'cart': result}, status=status.HTTP_200_OK)
         except:
             return Response(
                 {'error': 'Something went wrong when retrieving cart items'},

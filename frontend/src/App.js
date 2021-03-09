@@ -12,6 +12,7 @@ import ProductDetail from './containers/ProductDetail';
 import Google from './containers/Google';
 import Facebook from './containers/Facebook';
 import Dashboard from './containers/Dashboard';
+import OrderItemDetail from './containers/OrderItemDetail';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import Activate from './containers/Activate';
@@ -36,7 +37,8 @@ const App = () => (
                     <Route exact path='/cart-or-continue-shopping' component={GoToCart} />
                     <Route exact path='/search' component={Search} />
                     <Route exact path='/product/:id' component={ProductDetail} />
-                    <Route exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exact path='/dashboard/order-detail/:transaction_id' component={OrderItemDetail} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/signup' component={Signup} />
                     <Route exact path='/google' component={Google} />

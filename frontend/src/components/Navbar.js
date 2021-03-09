@@ -82,6 +82,19 @@ const Navbar = ({
         </Fragment>
     );
 
+    const dashboard = () => {
+        return (
+            <li className='nav-item'>
+                <NavLink 
+                    className='nav-link mt-1' 
+                    to='/dashboard'
+                >
+                    Dashboard
+                </NavLink>
+            </li>
+        );
+    }
+
     const getNavbar = () => (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <Link className='navbar-brand' to='/'>Shop Time</Link>
@@ -107,6 +120,7 @@ const Navbar = ({
                             Home
                         </NavLink>
                     </li>
+                    {isAuthenticated ? dashboard() : <Fragment></Fragment>}
                     <SearchBox
                         search={search}
                         onChange={onChange}
