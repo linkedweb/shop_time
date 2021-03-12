@@ -230,7 +230,7 @@ class ProcessPaymentView(APIView):
 
                 if discount_percentage > 1 and discount_percentage < 100:
                     total_amount -= (total_amount *
-                                        (discount_percentage / 100))
+                                     (discount_percentage / 100))
 
         # Add tax to total (can add tax after shipping if e-commerce store is applying tax in that way)
         total_amount += (total_amount * tax)

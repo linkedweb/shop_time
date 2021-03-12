@@ -16,7 +16,7 @@ class Order(models.Model):
 
     status = models.CharField(
         max_length=50, choices=OrderStatus.choices, default=OrderStatus.not_processed)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_id = models.CharField(max_length=255, unique=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     full_name = models.CharField(max_length=255)
@@ -47,4 +47,3 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.name
-

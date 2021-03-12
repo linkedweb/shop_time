@@ -16,6 +16,6 @@ class DeleteUserAccountView(APIView):
                 {'success': 'Successfully deleted user account'},
                 status=status.HTTP_200_OK)
         except:
-            return Resonse(
+            return Response(
                 {'error': 'Failed to delete user account'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
