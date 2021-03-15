@@ -32,6 +32,7 @@ const Checkout = ({
     process_payment,
     isAuthenticated,
     user,
+    profile,
     clientToken,
     made_payment,
     loading,
@@ -75,6 +76,29 @@ const Checkout = ({
     } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    useEffect(() => {
+        if (
+            profile && 
+            profile !== null && 
+            profile !== undefined &&
+            user && 
+            user !== null && 
+            user !== undefined
+        ) {
+            setFormData({
+                ...formData,
+                full_name: user.first_name + ' ' + user.last_name,
+                address_line_1: profile.address_line_1,
+                address_line_2: profile.address_line_2,
+                city: profile.city,
+                state_province_region: profile.state_province_region,
+                postal_zip_code: profile.zipcode,
+                telephone_number: profile.phone,
+                country_region: profile.country_region
+            });
+        }
+    }, [profile, user]);
 
     const apply_coupon = async e => {
         e.preventDefault();
@@ -421,13 +445,14 @@ const Checkout = ({
                         city={city}
                         state_province_region={state_province_region}
                         postal_zip_code={postal_zip_code}
-                        country_region={country_region}
                         telephone_number={telephone_number}
                         countries={countries}
                         onChange={onChange}
                         buy={buy}
                         renderShipping={renderShipping}
                         renderPaymentInfo={renderPaymentInfo}
+                        user={user}
+                        profile={profile}
                     />
                 </div>
             </div>
@@ -438,6 +463,7 @@ const Checkout = ({
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
+    profile: state.profile.profile,
     items: state.cart.items,
     total_items: state.cart.total_items,
     coupon: state.coupons.coupon,

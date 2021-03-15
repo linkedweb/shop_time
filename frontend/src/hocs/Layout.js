@@ -11,11 +11,15 @@ import {
     get_total,
     get_item_total
 } from '../actions/cart';
+import {
+    get_user_profile,
+} from '../actions/profile';
 import Navbar from '../components/Navbar';
 
 const Layout = ({ 
     check_authenticated,
     load_user,
+    get_user_profile,
     refresh,
     get_items,
     get_total,
@@ -28,6 +32,7 @@ const Layout = ({
         refresh();
         check_authenticated();
         load_user();
+        get_user_profile();
         get_items();
         get_total();
         get_item_total();
@@ -57,8 +62,9 @@ const Layout = ({
 export default connect(null, {
     check_authenticated,
     load_user,
+    get_user_profile,
     refresh,
     get_items,
     get_total,
-    get_item_total
+    get_item_total,
 })(Layout);

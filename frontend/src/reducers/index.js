@@ -7,6 +7,7 @@ import coupons from './coupons';
 import orders from './orders';
 import payment from './payment';
 import products from './products';
+import profile from './profile';
 import shipping from './shipping';
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
     orders,
     payment,
     products,
+    profile,
     shipping,
 });

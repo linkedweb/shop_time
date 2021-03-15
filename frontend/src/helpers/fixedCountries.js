@@ -120,6 +120,9 @@ export const countries = [
         name: 'Cameroon'
     },
     {
+        name: 'Canada'
+    },
+    {
         name: 'Cayman Islands'
     },
     {
