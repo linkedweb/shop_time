@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
     add_item,
     get_items,
     get_total,
-    get_item_total,
+    get_item_total
 } from '../actions/cart';
 import {
     get_wishlist_items,
@@ -12,16 +13,15 @@ import {
     add_wishlist_item,
     remove_wishlist_item,
 } from '../actions/wishlist';
-import { connect } from 'react-redux';
 import Card from '../components/Card';
 
-const Search = ({
-    search_products,
+const WishList = ({
+    wishlist,
+    total_items,
     add_item,
     get_items,
     get_total,
     get_item_total,
-    wishlist,
     get_wishlist_items,
     get_wishlist_item_total,
     add_wishlist_item,
@@ -31,6 +31,13 @@ const Search = ({
     const [loginRedirect, setLoginRedirect] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+
+        get_wishlist_items();
+        get_wishlist_item_total();
+    }, []);
+
     if (loginRedirect)
         return <Redirect to='/login' />;
     if (redirect)
@@ -38,23 +45,20 @@ const Search = ({
 
     return (
         <div className='container mt-5'>
-            <h2 className='text-muted mb-5'>
-            Found {
-                search_products &&
-                search_products !== null &&
-                search_products !== undefined &&
-                search_products.length
-            } proudct(s) for you!
-            </h2>
+            <h2>Your Items:</h2>
+            <h4 className='text-muted mt-3'>
+                Your wishlist has {total_items} item(s)
+            </h4>
+            <hr />
             <div className='row'>
                 {
-                    search_products && 
-                    search_products !== null &&
-                    search_products !== undefined &&
-                    search_products.map((product, index) => (
+                    wishlist &&
+                    wishlist !== null && 
+                    wishlist !== undefined &&
+                    wishlist.map((item, index) => (
                         <div key={index} className='col-4'>
                             <Card
-                                product={product}
+                                product={item.product}
                                 add_item={add_item}
                                 get_items={get_items}
                                 get_total={get_total}
@@ -77,10 +81,10 @@ const Search = ({
 };
 
 const mapStateToProps = state => ({
-    search_products: state.products.search_products,
     wishlist: state.wishlist.items,
+    total_items: state.wishlist.total_items,
     isAuthenticated: state.auth.isAuthenticated,
-})
+});
 
 export default connect(mapStateToProps, {
     add_item,
@@ -91,4 +95,4 @@ export default connect(mapStateToProps, {
     get_wishlist_item_total,
     add_wishlist_item,
     remove_wishlist_item,
-})(Search);
+})(WishList);

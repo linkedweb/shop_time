@@ -13,6 +13,7 @@ const Navbar = ({
     logout,
     categories,
     total_items,
+    total_wishlist_items,
     get_categories,
     get_search_products,
     setSearchRedirect
@@ -95,6 +96,30 @@ const Navbar = ({
         );
     }
 
+    const showWishList = (
+        <li className='nav-item'>
+            <NavLink 
+                className='nav-link mt-1' 
+                to='/wishlist'
+            >
+                Wishlist <sup>
+                    <small
+                        style={{
+                            borderRadius: '50%',
+                            padding: '2px',
+                            fontSize: '12px',
+                            fontStyle: 'italic',
+                            backgroundColor: '#777',
+                            color: '#fff'
+                        }}
+                    >
+                        {total_wishlist_items}
+                    </small>
+                </sup>
+            </NavLink>
+        </li>
+    );
+
     const getNavbar = () => (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <Link className='navbar-brand' to='/'>Shop Time</Link>
@@ -156,6 +181,7 @@ const Navbar = ({
                             </sup>
                         </NavLink>
                     </li>
+                    { isAuthenticated ? showWishList : <Fragment></Fragment> }
                     {
                         isAuthenticated ? authLinks : guestLinks
                     }
@@ -193,7 +219,8 @@ const Navbar = ({
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     categories: state.categories.categories,
-    total_items: state.cart.total_items
+    total_items: state.cart.total_items,
+    total_wishlist_items: state.wishlist.total_items,
 });
 
 export default connect(mapStateToProps, {

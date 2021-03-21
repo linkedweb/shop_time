@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Layout from './hocs/Layout';
 import Home from './containers/Home';
 import Cart from './containers/Cart';
+import WishList from './containers/WishList';
 import Checkout from './containers/Checkout';
 import GoToCart from './containers/GoToCart';
 import Shop from './containers/Shop';
@@ -33,6 +34,7 @@ const App = () => (
                     <Route exact path='/' component={Home} />
                     <Route exact path='/shop' component={Shop} />
                     <Route exact path='/cart' component={Cart} />
+                    <PrivateRoute exact path='/wishlist' component={WishList} />
                     <PrivateRoute exact path='/checkout' component={Checkout} />
                     <Route exact path='/cart-or-continue-shopping' component={GoToCart} />
                     <Route exact path='/search' component={Search} />

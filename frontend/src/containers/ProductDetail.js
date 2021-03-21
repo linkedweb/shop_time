@@ -11,6 +11,12 @@ import {
     get_total,
     get_item_total
 } from '../actions/cart';
+import {
+    get_wishlist_items,
+    get_wishlist_item_total,
+    add_wishlist_item,
+    remove_wishlist_item,
+} from '../actions/wishlist';
 import Card from '../components/Card';
 import ProductDetailCard from '../components/ProductDetailCard';
 
@@ -23,8 +29,15 @@ const ProductDetail = ({
     add_item,
     get_items,
     get_total,
-    get_item_total
+    get_item_total,
+    wishlist,
+    get_wishlist_items,
+    get_wishlist_item_total,
+    add_wishlist_item,
+    remove_wishlist_item,
+    isAuthenticated,
 }) => {
+    const [loginRedirect, setLoginRedirect] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
@@ -50,6 +63,13 @@ const ProductDetail = ({
                         get_items={get_items}
                         get_total={get_total}
                         get_item_total={get_item_total}
+                        wishlist={wishlist}
+                        get_wishlist_items={get_wishlist_items}
+                        get_wishlist_item_total={get_wishlist_item_total}
+                        add_wishlist_item={add_wishlist_item}
+                        remove_wishlist_item={remove_wishlist_item}
+                        isAuthenticated={isAuthenticated}
+                        setLoginRedirect={setLoginRedirect}
                         setRedirect={setRedirect}
                     />
                 </div>
@@ -57,6 +77,8 @@ const ProductDetail = ({
         }
     };
 
+    if (loginRedirect)
+        return <Redirect to='/login' />;
     if (redirect)
         return <Redirect to='/cart-or-continue-shopping' />;
 
@@ -69,6 +91,11 @@ const ProductDetail = ({
                 get_total={get_total}
                 get_item_total={get_item_total}
                 setRedirect={setRedirect}
+                isAuthenticated={isAuthenticated}
+                setLoginRedirect={setLoginRedirect}
+                add_wishlist_item={add_wishlist_item}
+                get_wishlist_items={get_wishlist_items}
+                get_wishlist_item_total={get_wishlist_item_total}
             />
 
             <hr />
@@ -85,7 +112,9 @@ const ProductDetail = ({
 
 const mapStateToProps = state => ({
     product: state.products.product,
-    related_products: state.products.related_products
+    related_products: state.products.related_products,
+    wishlist: state.wishlist.items,
+    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
@@ -94,5 +123,9 @@ export default connect(mapStateToProps, {
     add_item,
     get_items,
     get_total,
-    get_item_total
+    get_item_total,
+    get_wishlist_items,
+    get_wishlist_item_total,
+    add_wishlist_item,
+    remove_wishlist_item,
 })(ProductDetail);

@@ -12,6 +12,10 @@ import {
     get_item_total
 } from '../actions/cart';
 import {
+    get_wishlist_items,
+    get_wishlist_item_total,
+} from '../actions/wishlist';
+import {
     get_user_profile,
 } from '../actions/profile';
 import Navbar from '../components/Navbar';
@@ -24,6 +28,8 @@ const Layout = ({
     get_items,
     get_total,
     get_item_total,
+    get_wishlist_items,
+    get_wishlist_item_total,
     children
 }) => {
     const [searchRedirect, setSearchRedirect] = useState(false);
@@ -36,6 +42,8 @@ const Layout = ({
         get_items();
         get_total();
         get_item_total();
+        get_wishlist_items();
+        get_wishlist_item_total();
     }, []);
 
     if (searchRedirect) {
@@ -67,4 +75,6 @@ export default connect(null, {
     get_items,
     get_total,
     get_item_total,
+    get_wishlist_items,
+    get_wishlist_item_total,
 })(Layout);

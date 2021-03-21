@@ -1,0 +1,23 @@
+.wishlist_heart {
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+.wishlist_heart:hover {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.wishlist_selected {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.wishlist_selected:hover {
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 28px;
+}
