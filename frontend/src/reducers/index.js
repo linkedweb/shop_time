@@ -9,6 +9,7 @@ import payment from './payment';
 import products from './products';
 import profile from './profile';
 import shipping from './shipping';
+import reviews from './reviews';
 import wishlist from './wishlist';
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
     products,
     profile,
     shipping,
+    reviews,
     wishlist,
 });

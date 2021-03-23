@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     path('api/profile/', include('user_profile.urls')),
     path('api/wishlist/', include('wishlist.urls')),
+    path('api/reviews/', include('reviews.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
