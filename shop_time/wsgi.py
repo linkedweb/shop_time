@@ -17,4 +17,3 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shop_time.settings')
 
 application = get_wsgi_application()
 application = WhiteNoise(application, root=settings.STATIC_ROOT)
-application.add_files(settings.STATICFILES_DIRS, prefix='more-files/')
