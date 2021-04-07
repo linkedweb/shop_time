@@ -10,7 +10,10 @@ import {
     PAYMENT_FAIL,
     RESET_PAYMENT_INFO,
     SET_PAYMENT_LOADING,
-    REMOVE_PAYMENT_LOADING
+    REMOVE_PAYMENT_LOADING,
+    CREATE_STRIPE_PAYMENT_INTENT_SUCCESS,
+    CREATE_STRIPE_PAYMENT_INTENT_FAIL,
+    MADE_STRIPE_PAYMENT,
 } from './types';
 
 export const get_payment_total = (shipping_id, coupon_name) => async dispatch => {
@@ -139,5 +142,49 @@ export const process_payment = (
 export const reset = () => dispatch => {
     dispatch({
         type: RESET_PAYMENT_INFO
+    });
+};
+
+export const create_stripe_payment_intent = (shipping_id, coupon_name) => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem('access')}`
+        }
+    };
+
+    const body = JSON.stringify({
+        shipping_id,
+        coupon_name
+    });
+
+    try {
+        const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/api/stripe/create-payment-intent`,
+            body,
+            config
+        );
+
+        if (res.status === 200 && !res.data.error) {
+            dispatch({
+                type: CREATE_STRIPE_PAYMENT_INTENT_SUCCESS,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: CREATE_STRIPE_PAYMENT_INTENT_FAIL
+            });
+        }
+    } catch(err) {
+        dispatch({
+            type: CREATE_STRIPE_PAYMENT_INTENT_FAIL
+        });
+    }
+};
+
+export const made_stripe_payment = () => dispatch => {
+    dispatch({
+        type: MADE_STRIPE_PAYMENT
     });
 };

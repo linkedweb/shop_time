@@ -2,12 +2,17 @@ import {
     GET_ORDERS_SUCCESS,
     GET_ORDERS_FAIL,
     GET_ORDER_DETAIL_SUCCESS,
-    GET_ORDER_DETAIL_FAIL
+    GET_ORDER_DETAIL_FAIL,
+    CREATE_ORDER_SUCCESS,
+    CREATE_ORDER_FAIL,
+    SET_ORDERS_LOADING,
+    REMOVE_ORDERS_LOADING,
 } from '../actions/types';
 
 const initialState = {
     orders: null,
-    order: null
+    order: null,
+    loading: false
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +38,21 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 order: {}
+            }
+        case CREATE_ORDER_SUCCESS:
+        case CREATE_ORDER_FAIL:
+            return {
+                ...state
+            }
+        case SET_ORDERS_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+        case REMOVE_ORDERS_LOADING:
+            return {
+                ...state,
+                loading: false
             }
         default:
             return state;

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'payment',
+    'stripe_payments',
     'shipping',
     'user_profile',
     'wishlist',
@@ -210,6 +211,9 @@ BT_ENVIRONMENT = 'sandbox'
 BT_MERCHANT_ID = '9k7qfkf4snz4kxqj'
 BT_PUBLIC_KEY = 'qjx5n9d2cpns523z'
 BT_PRIVATE_KEY = '069a1688bf476c4eef953244ca2bd19b'
+
+STRIPE_PUBLIC_KEY = 'pk_test_51ITw4JEyAYz4qWKDbH0a70riUVZXja5ixeDXjpRjyFBUTSdU9JL79ZpMulXm2xckWKAoKLJNrTi1nCDIexTbKaFI00zEyLzgjK'
+STRIPE_SECRET_KEY = 'sk_test_51ITw4JEyAYz4qWKDwKzaLqkkhrMoIUy2H6uIP8gSKiSgQ4askjLS0xR40wfHPiR8M5EAF7d2NZJe1MMF6JfomYXI00ESmzEZ6c'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '913181233276-6dbe4tj45dj94nfrerv1d92djb7moto2.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '53Izi8qbTb6-2y2ChEwCOkey'

@@ -7,11 +7,15 @@ import {
     PAYMENT_FAIL,
     RESET_PAYMENT_INFO,
     SET_PAYMENT_LOADING,
-    REMOVE_PAYMENT_LOADING
+    REMOVE_PAYMENT_LOADING,
+    CREATE_STRIPE_PAYMENT_INTENT_SUCCESS,
+    CREATE_STRIPE_PAYMENT_INTENT_FAIL,
+    MADE_STRIPE_PAYMENT,
 } from '../actions/types';
 
 const initialState = {
     clientToken: null,
+    clientSecret: null,
     made_payment: false,
     original_price: 0.0,
     total_after_coupon: 0.0,
@@ -81,6 +85,22 @@ export default function(state = initialState, action) {
                 ...state,
                 made_payment: false,
                 clientToken: null
+            }
+        case CREATE_STRIPE_PAYMENT_INTENT_SUCCESS:
+            return {
+                ...state,
+                clientSecret: payload.clientSecret
+            }
+        case CREATE_STRIPE_PAYMENT_INTENT_FAIL:
+            return {
+                ...state,
+                clientSecret: null
+            }
+        case MADE_STRIPE_PAYMENT:
+            return {
+                ...state,
+                clientSecret: null,
+                made_payment: true
             }
         default:
             return state;
