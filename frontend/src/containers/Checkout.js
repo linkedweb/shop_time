@@ -4,6 +4,9 @@ import { Elements } from '@stripe/react-stripe-js';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+    setAlert
+} from '../actions/alert';
+import {
     check_coupon
 } from '../actions/coupons';
 import {
@@ -16,7 +19,8 @@ import {
     get_payment_total,
     get_client_token,
     process_payment,
-    create_stripe_payment_intent
+    create_stripe_payment_intent,
+    made_paypal_payment
 } from '../actions/payment';
 import {
     create_order
@@ -57,6 +61,8 @@ const Checkout = ({
     create_order,
     clientSecret,
     create_order_loading,
+    setAlert,
+    made_paypal_payment,
 }) => {
     const [formData, setFormData] = useState({
         full_name: '',
@@ -424,11 +430,14 @@ const Checkout = ({
         );
     };
 
-    const renderStripePaymentForm = () => {
+    const renderPaymentForm = () => {
         return (
             <Elements stripe={promise}>
                 <CheckoutForm
                     shipping_id={shipping_id}
+                    coupon_name={
+                        coupon !== null && 
+                        coupon !== undefined ? coupon.name : ''}
                     full_name={full_name}
                     address_line_1={address_line_1}
                     address_line_2={address_line_2}
@@ -445,6 +454,8 @@ const Checkout = ({
                     create_order={create_order}
                     clientSecret={clientSecret}
                     loading={create_order_loading}
+                    setAlert={setAlert}
+                    made_paypal_payment={made_paypal_payment}
                 />
             </Elements>
         );
@@ -502,8 +513,8 @@ const Checkout = ({
                     <div style={{ fontSize: '18px' }}>
                         {displayTotal()}
                     </div>
-                    {renderBraintreePaymentForm()}
-                    {/* {renderStripePaymentForm()} */}
+                    {/* {renderBraintreePaymentForm()} */}
+                    {renderPaymentForm()}
                 </div>
             </div>
         </div>
@@ -540,4 +551,6 @@ export default connect(mapStateToProps, {
     process_payment,
     create_stripe_payment_intent,
     create_order,
+    setAlert,
+    made_paypal_payment,
 })(Checkout);

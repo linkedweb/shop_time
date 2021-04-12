@@ -5,9 +5,11 @@ import {
   useElements
 } from '@stripe/react-stripe-js';
 import Loader from 'react-loader-spinner';
+import PayPalButton from './PayPalButton';
 
 const CheckoutForm = ({
     shipping_id,
+    coupon_name,
     full_name,
     address_line_1,
     address_line_2,
@@ -24,6 +26,8 @@ const CheckoutForm = ({
     create_order,
     clientSecret,
     loading,
+    setAlert,
+    made_paypal_payment,
 }) => {
     const [succeeded, setSucceeded] = useState(false);
     const [error, setError] = useState(null);
@@ -244,6 +248,22 @@ const CheckoutForm = ({
                     </div>
                 )
             }
+            <div className='mt-5'>
+                <PayPalButton
+                    shipping_id={shipping_id}
+                    coupon_name={coupon_name}
+                    full_name={full_name}
+                    address_line_1={address_line_1}
+                    address_line_2={address_line_2}
+                    city={city}
+                    state_province_region={state_province_region}
+                    postal_zip_code={postal_zip_code}
+                    country_region={country_region}
+                    telephone_number={telephone_number}
+                    setAlert={setAlert}
+                    made_paypal_payment={made_paypal_payment}
+                />
+            </div>
         </form>
     );
 };

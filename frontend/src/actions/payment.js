@@ -14,6 +14,7 @@ import {
     CREATE_STRIPE_PAYMENT_INTENT_SUCCESS,
     CREATE_STRIPE_PAYMENT_INTENT_FAIL,
     MADE_STRIPE_PAYMENT,
+    MADE_PAYPAL_PAYMENT,
 } from './types';
 
 export const get_payment_total = (shipping_id, coupon_name) => async dispatch => {
@@ -186,5 +187,11 @@ export const create_stripe_payment_intent = (shipping_id, coupon_name) => async 
 export const made_stripe_payment = () => dispatch => {
     dispatch({
         type: MADE_STRIPE_PAYMENT
+    });
+};
+
+export const made_paypal_payment = () => dispatch => {
+    dispatch({
+        type: MADE_PAYPAL_PAYMENT
     });
 };

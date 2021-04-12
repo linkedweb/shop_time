@@ -11,6 +11,7 @@ import {
     CREATE_STRIPE_PAYMENT_INTENT_SUCCESS,
     CREATE_STRIPE_PAYMENT_INTENT_FAIL,
     MADE_STRIPE_PAYMENT,
+    MADE_PAYPAL_PAYMENT,
 } from '../actions/types';
 
 const initialState = {
@@ -100,6 +101,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 clientSecret: null,
+                made_payment: true
+            }
+        case MADE_PAYPAL_PAYMENT:
+            return {
+                ...state,
                 made_payment: true
             }
         default:
