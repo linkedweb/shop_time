@@ -123,7 +123,8 @@ const Checkout = ({
                 state_province_region,
                 postal_zip_code,
                 country_region,
-                telephone_number
+                telephone_number,
+                total_amount
             );
         } else {
             process_payment(
@@ -137,7 +138,8 @@ const Checkout = ({
                 state_province_region,
                 postal_zip_code,
                 country_region,
-                telephone_number
+                telephone_number,
+                total_amount
             );
         }
         

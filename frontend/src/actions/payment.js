@@ -80,7 +80,8 @@ export const process_payment = (
     state_province_region,
     postal_zip_code,
     country_region,
-    telephone_number
+    telephone_number,
+    total_amount
 ) => async dispatch => {
     const config = {
         headers: {
@@ -112,6 +113,9 @@ export const process_payment = (
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/make-payment`, body, config);
 
         if (res.status === 200 && res.data.success) {
+            window.dataLayer.push({
+                total_amount: parseFloat(total_amount)
+            });
             dispatch({
                 type: PAYMENT_SUCCESS
             });

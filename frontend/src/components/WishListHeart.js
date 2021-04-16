@@ -55,6 +55,7 @@ const wishListHeart = ({
                     }}
                 >
                     <FontAwesomeIcon
+                        id={`wishlist_item_${product.id}`}
                         onClick={toggleWishlist}
                         className='wishlist_heart'
                         icon={faHeart}

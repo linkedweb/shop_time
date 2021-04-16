@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
@@ -152,6 +153,11 @@ const Shop = ({
 
     return (
         <div className='container'>
+            <Helmet>
+                <meta name='description' content='Shop Time shop page, ...' />
+                <title>Shop Time - Shop Page</title>
+                <link rel='canonical' href='https://shoptime.com/shop' />
+            </Helmet>
             <div className='jumbotron mt-5'>
                 <h1 className='display-4'>Shop Page</h1>
                 <p className='lead'>

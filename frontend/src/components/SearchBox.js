@@ -47,6 +47,7 @@ const searchBox = ({
             </span>
             <span>
                 <button
+                    id='search_box'
                     style={{ backgroundColor: '#f8f9fa', border: 'none' }}
                     className='btn input-group-append input-group-text ml-2'
                 >

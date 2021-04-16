@@ -114,11 +114,12 @@ const card = ({
                 </p>
                 <p className='card-text text-muted'>Added {moment(product.date_created).fromNow()}</p>
                 <Link to={`/product/${product.id}`}>
-                    <button className='btn btn-outline-primary mt-2 mb-2 mr-2'>
+                    <button id={`product_detail_${product.id}`} className='btn btn-outline-primary mt-2 mb-2 mr-2'>
                         View Product
                     </button>
                 </Link>
                 <button 
+                    id={`cart_item_${product.id}`}
                     onClick={addToCart} 
                     className='btn btn-outline-warning mt-2 mb-2'>
                     Add to Cart

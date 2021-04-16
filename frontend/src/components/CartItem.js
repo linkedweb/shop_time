@@ -104,7 +104,10 @@ const CartItem = ({
                     item.product !== undefined ? 
                     item.product.id : 0
                 }`}>
-                    <button className='btn btn-outline-primary mt-2 mb-2 mr-2'>
+                    <button 
+                        id={`product_detail_${item.product.id}`} 
+                        className='btn btn-outline-primary mt-2 mb-2 mr-2'
+                    >
                         View Product
                     </button>
                 </Link>
