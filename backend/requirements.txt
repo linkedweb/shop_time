@@ -4,3 +4,4 @@ djangorestframework==3.12.4
 Pillow==8.1.2
 psycopg2==2.8.6
 psycopg2-binary==2.8.6
+PyJWT==2.1.0
