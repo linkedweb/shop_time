@@ -9,3 +9,4 @@ psycopg2-binary==2.8.6
 braintree==4.7.0
 stripe==2.56.0
 paypal-checkout-serversdk==1.0.1
+PyJWT==2.1.0
